@@ -8,14 +8,17 @@ import styled from 'styled-components';
 import { Button } from '../StyledComponents/button';
 
 const Pitch = styled.h1`
-  font-size: 40px;
-  font-weight: 800;
+  font-size: 35px;
+  font-weight: 600;
+  margin: 0;
 `;
 
 const Desc = styled.h2`
-  font-size: 20px;
+  font-size: 18px;
   font-weight: normal;
   line-height: 1.5;
+  margin-top: 0;
+  margin-bottom: 24px;
 `;
 
 const SignInContainer = styled.section`
