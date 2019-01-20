@@ -6,7 +6,7 @@ const GlobalStyle = createGlobalStyle`
     font-size: 16px;
     font-weight: normal;
     line-height: 1.5;
-    letter-spacing: -1px;
+    letter-spacing: -0.5px;
     background-color: white;
     color: black;
     margin: 0;
@@ -21,6 +21,14 @@ const GlobalStyle = createGlobalStyle`
   img {
     width: 100%;
     height: auto;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  button {
+    cursor: pointer;
   }
 
 `;

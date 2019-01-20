@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { inject, observer } from 'mobx-react';
-
 import { signUserOut } from 'blockstack';
 import { ActionButton } from '../StyledComponents/button';
+import { Container, Row, Col } from 'react-grid-system';
 
 const ActionList = styled.ul`
   text-align: right;
@@ -42,19 +42,19 @@ class _Header extends Component {
   render() {
     return (
       <HeaderWrapper>
-        <div className="container">
-          <div className="row">
-            <div className="col-md-6">
-                <p>Welcome, {this.props.name}</p>
-            </div>
-            <div className="col-md-6">
+        <Container fluid>
+        <Row align="center">
+          <Col>
+              <p>Welcome, {this.props.name}</p>
+          </Col>
+          <Col>
               <ActionList>
                 <li onClick={this.openForm}><ActionButton>+ Artwork</ActionButton></li>
                 <li><ActionButton onClick={this.handleSignOut}>Logout</ActionButton></li>
               </ActionList>
-            </div>
-          </div>
-        </div>
+          </Col>
+        </Row>
+        </Container>
       </HeaderWrapper>
     );
   }

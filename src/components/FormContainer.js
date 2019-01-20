@@ -45,6 +45,6 @@ class _FormContainer extends Component {
 
 }
 
-const FormContainer = inject('FormStore')(observer(_FormContainer))
+const FormContainer = inject('FormStore')(observer(_FormContainer));
 
 export default FormContainer;

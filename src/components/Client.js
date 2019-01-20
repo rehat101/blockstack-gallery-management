@@ -6,6 +6,8 @@ import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import App from './App';
 import Signin from './Signin';
 import Form from './Form';
+import GlobalStyle from '../StyledComponents/global';
+
 
 class Client extends Component {
 
@@ -16,6 +18,8 @@ class Client extends Component {
   render() {
     return (
       <Provider {...this.props.stores}>
+      <React.Fragment>
+        <GlobalStyle/>
          <BrowserRouter>
             <Switch>
               <Route exact path="/" component={Signin} />
@@ -23,6 +27,7 @@ class Client extends Component {
               <Route path="/add-artwork" component={Form} />
             </Switch>
         </BrowserRouter>
+      </React.Fragment>
       </Provider>
     );
   }

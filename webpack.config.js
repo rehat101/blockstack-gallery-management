@@ -1,5 +1,7 @@
 const path = require('path');
-const webpack = require('webpack');
+// const webpack = require('webpack');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 
 // copy manifest.json to the path: 'public/build'
 // this will allow for the authRequest to see the file at www.example.com/manifest.json
@@ -20,6 +22,39 @@ module.exports = {
   output: {
     path: path.resolve('public/build'),
     filename: 'index_bundle.js',
+    chunkFilename: '[name].bundle.js'
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      maxInitialRequests: Infinity,
+      minSize: 0,
+      cacheGroups: {
+        react: {
+          test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+          name: 'react',
+          reuseExistingChunk: true,
+          chunks: 'all',
+        },
+        lodash: {
+          test: /[\\/]lodash[\\/]/,
+          name: 'lodash',
+          chunks: 'all',
+        },
+        blockstack: {
+          test: /[\\/]blockstack[\\/]/,
+          name: 'blockstack',
+          reuseExistingChunk: true,
+          chunks: 'all',
+        },
+        mobx: {
+          test: /[\\/]mobx[\\/]/,
+          name: 'mobx',
+          reuseExistingChunk: true,
+          chunks: 'all',
+        }
+      }
+    }
   },
   devServer: {
     historyApiFallback: true,
@@ -32,15 +67,12 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.json$/, use: 'json-loader' },
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
-      { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ },
       {
         test: /\.(eot|woff|woff2|ttf|svg|png|jpe?g|gif)(\?\S*)?$/,
         loader: 'file-loader!url-loader',
-      },
-      { test: /\.css$/, loader: 'style-loader!css-loader' }
+      }
     ]
   },
-  plugins: [HtmlWebpackPluginConfig, ManifestAssetPlugin, IconAssetPlugin]
+  plugins: [new BundleAnalyzerPlugin(),HtmlWebpackPluginConfig, ManifestAssetPlugin, IconAssetPlugin]
 };

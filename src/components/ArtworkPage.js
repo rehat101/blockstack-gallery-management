@@ -3,8 +3,9 @@ import LazyImg from './LazyImg';
 import styled from 'styled-components';
 import {Button} from '../StyledComponents/button';
 import { inject, observer } from 'mobx-react';
+import { Container, Row, Col } from 'react-grid-system';
 
-const Container = styled.section`
+const Wrapper = styled.section`
   margin-top: 20px;
 
   a {
@@ -77,13 +78,13 @@ class _ArtworkPage extends Component {
     }
 
     return (
-      <Container>
-       <div className="container">
-          <div className="row">
-            <div className="col-md-6">
+      <Wrapper>
+        <Container fluid>
+          <Row justify="center">
+            <Col md={4}>
               <Center><LazyImg src={artwork.img_url}/></Center>
-            </div>
-            <div className="col-md-4">
+            </Col>
+            <Col md={4}>
               <Title>{artwork.title}</Title>
               <Desc>{artwork.description}</Desc>
               <ContactSection>
@@ -92,10 +93,10 @@ class _ArtworkPage extends Component {
                 <Button width="100%" href="#">Bid Now</Button>
               </ContactSection>
               <a href="#">Contact Gallery</a>
-            </div>
-          </div>
-       </div>
-     </Container>
+            </Col>
+          </Row>
+        </Container>
+     </Wrapper>
     );
   }
 

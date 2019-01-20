@@ -1,9 +1,10 @@
 import { action, observable } from 'mobx';
 import { putFile, getFile } from 'blockstack';
+import { indexOf } from 'lodash';
 
 const IMG_PATH = 'artworks/images/artwork_';
 const ART_DATA_PATH = 'artworks/artwork_';
-const INDEX = 'index.json';
+const INDEX_PATH = 'index.json';
 
 class FormStore {
 
@@ -11,17 +12,6 @@ class FormStore {
 
   @action setIsOpen(value) {
     this.isOpen = value;
-  }
-
-  AddIndexFile(id) {
-
-    let data = {
-        artworks: [`artwork_${id}`]
-    };
-
-    data = JSON.stringify(data);
-
-    return data;
   }
 
   parseArtworkData(payload, imgUrl) {
@@ -52,45 +42,36 @@ class FormStore {
 
     try {
 
-      const imgUrl = await putFile(`${IMG_PATH}${payload.id}.png`, payload.img_buffer, {
-          encrypt: false
-      });
+      const imgUrl = await putFile(`${IMG_PATH}${payload.id}.png`, payload.img_buffer, { encrypt: false, contentType: 'image/png' });
+      const artwork = this.parseArtworkData(payload, imgUrl);
 
-      const JSONdata = this.parseArtworkData(payload, imgUrl);
-      await putFile(`${ART_DATA_PATH}${payload.id}.json`, JSONdata, {
-          encrypt: false
-      });
-      const index = await this.upsertToIndex(payload.id);
+      await putFile(`${ART_DATA_PATH}${payload.id}.json`, artwork, { encrypt: false });
 
-      return index;
+      return await this.upsertIndex(payload.id);
     }
 
     catch(err) { console.log(err); }
   }
 
-  async upsertToIndex(id) {
+  async upsertIndex(id) {
+    const artwork = `artwork_${id}`;
 
     try {
 
-      const response = await getFile(INDEX, {decrypt: false});
+      let index = await getFile(INDEX_PATH, {decrypt: false});
+      index = JSON.parse(index);
 
-      //index doesn't exist
-      if(!response) {
-          return await putFile(INDEX, this.AddIndexFile(id), {
-              encrypt: false
-          });
+      //find and update
+      const match = indexOf(index.artworks, artwork);
+
+      if(match >= 0) {
+          let i = indexOf(index.artworks, artwork);
+          index.artworks.splice(i, 1, artwork);
+      } else {
+          index.artworks.push(artwork);
       }
 
-      //index exist
-      let data = JSON.parse(response);
-      data.artworks.push(`artwork_${id}`);
-      data = JSON.stringify(data);
-
-      const response2 = await putFile(INDEX, data, {
-          encrypt: false
-      });
-
-      return response2;
+      return await putFile(INDEX_PATH, JSON.stringify(index), { encrypt: false });
     }
 
     catch (err) { console.log(err); }

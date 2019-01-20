@@ -4,26 +4,26 @@ import Promise from 'bluebird';
 
 class GridStore {
 
-	@observable artworks = [];
+	@observable data = [];
 
 	@action setData(data) {
-		this.artworks = data;
+		this.data = data;
 	}
 
 	@action async loadData() {
 
 		try {
 
-			let response = await getFile('index.json', {decrypt: false});
-			response = JSON.parse(response);
+			let index = await getFile('index.json', {decrypt: false});
+      index = JSON.parse(index);
 
-			let data = await Promise.map(response.artworks, async id => {
-				return await getFile(`artworks/${id}.json`, { decrypt: false });
-			});
+      let artworks = await Promise.map(index.artworks, async name => {
+        let artwork = await getFile(`artworks/${name}.json`, {decrypt: false});
 
-      data = data.map(item => JSON.parse(item));
+        return artwork = JSON.parse(artwork);
+      });
 
-			this.setData(data);
+			this.setData(artworks);
 		}
 
 		catch(err) { console.log(err); }

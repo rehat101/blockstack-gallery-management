@@ -109,14 +109,6 @@ class _Form extends Component {
     };
   }
 
-  async componentDidMount() {
-
-    listFiles((files) => console.log(files));
-
-    let res = await getFile('index.json', {decrypt: false});
-    console.log(res);
-  }
-
   render() {
     return (
       <FormWrapper>
