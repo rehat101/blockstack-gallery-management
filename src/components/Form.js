@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { inject, observer } from 'mobx-react';
 import { Button } from '../StyledComponents/button';
 import ArtworkThumbPreview from './ArtworkThumbPreview';
-import { getFile, listFiles } from 'blockstack';
 
 import {
   InputContainer,

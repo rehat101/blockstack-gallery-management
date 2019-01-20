@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Provider } from 'mobx-react';
-
-// import Routes from './Routes';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import App from './App';
 import Signin from './Signin';
