@@ -11,7 +11,6 @@ const GridWrapper = styled.div`
 
 const GridItem = styled.div`
   width: 100%;
-  padding-right: 10px;
   margin-bottom: 20px;
   -webkit-column-break-inside:avoid;
   -moz-column-break-inside:avoid;
@@ -19,7 +18,7 @@ const GridItem = styled.div`
 `;
 
 const GridMeta = styled.div`
-  margin-top: 10px;
+  margin-top: 2px;
 
   p {
     margin: 0 0 -5px 0;

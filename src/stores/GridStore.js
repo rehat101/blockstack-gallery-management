@@ -6,11 +6,7 @@ class GridStore {
 
 	@observable data = [];
 
-	@action setData(data) {
-		this.data = data;
-	}
-
-	@action async loadData() {
+	@action.bound async loadData() {
 
 		try {
 
@@ -23,7 +19,7 @@ class GridStore {
         return artwork = JSON.parse(artwork);
       });
 
-			this.setData(artworks);
+      this.data = artworks;
 		}
 
 		catch(err) { console.log(err); }

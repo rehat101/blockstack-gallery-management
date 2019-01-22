@@ -52,8 +52,8 @@ const FootNote = styled.p`
   line-height: 1.4;
 `;
 
-const Center = styled.div`
-  text-align: center;
+const Right = styled.section`
+  height: 230px;
 `;
 
 class _ArtworkPage extends Component {
@@ -82,11 +82,13 @@ class _ArtworkPage extends Component {
         <Container fluid>
           <Row justify="center">
             <Col md={4}>
-              <Center><LazyImg src={artwork.img_url}/></Center>
+              <LazyImg src={artwork.img_url} key={artwork.img_url || '(none)'}/>
             </Col>
             <Col md={4}>
+            <Right>
               <Title>{artwork.title}</Title>
               <Desc>{artwork.description}</Desc>
+            </Right>
               <ContactSection>
                 <Price>$2,450</Price>
                 <FootNote>Ships from Aventura, FL, US<br/>Shipping: $35 continental US, $100 rest of world</FootNote>

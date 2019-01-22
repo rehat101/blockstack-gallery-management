@@ -4,16 +4,13 @@ import { loadUserData } from 'blockstack';
 class AppStore {
   @observable userName = '';
 
-  @action setUserInfo (data) {
-      this.userName = data;
-  }
-
-  @action async loadUserInfo() {
+  @action.bound async loadUserInfo() {
 
     try {
-      let data = loadUserData().profile;
 
-      this.setUserInfo(data.name);
+      let data = loadUserData().profile;
+      this.userName = data.name;
+
     }
 
     catch(err) { console.log(err); }

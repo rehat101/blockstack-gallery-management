@@ -22,9 +22,10 @@ module.exports = {
   output: {
     path: path.resolve('public/build'),
     filename: 'index_bundle.js',
-    chunkFilename: '[name].bundle.js'
+    chunkFilename: '[name].[contenthash].js'
   },
   optimization: {
+    runtimeChunk: 'single',
     splitChunks: {
       chunks: 'all',
       maxInitialRequests: Infinity,

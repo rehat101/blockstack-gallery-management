@@ -45,7 +45,7 @@ class FormStore {
       const imgUrl = await putFile(`${IMG_PATH}${payload.id}.png`, payload.img_buffer, { encrypt: false, contentType: 'image/png' });
       const artwork = this.parseArtworkData(payload, imgUrl);
 
-      await putFile(`${ART_DATA_PATH}${payload.id}.json`, artwork, { encrypt: false });
+      await putFile(`${ART_DATA_PATH}${payload.id}.json`, artwork, { encrypt: false, contentType: 'application/json' });
 
       return await this.upsertIndex(payload.id);
     }

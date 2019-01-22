@@ -42,7 +42,6 @@
   "dependencies": {
     "blockstack": "^18.0.4",
     "bluebird": "^3.5.3",
-    "bootstrap": "^3.3.7",
     "loadash": "^1.0.0",
     "mobx": "^5.8.0",
     "mobx-react": "^5.4.3",

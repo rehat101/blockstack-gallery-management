@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, Suspense } from 'react';
 import { Provider } from 'mobx-react';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import App from './App';
-import Signin from './Signin';
-import Form from './Form';
 import GlobalStyle from '../StyledComponents/global';
+
+const Signin = React.lazy(() => import('./Signin'));
 
 
 class Client extends Component {
@@ -18,13 +18,14 @@ class Client extends Component {
       <Provider {...this.props.stores}>
       <React.Fragment>
         <GlobalStyle/>
-         <BrowserRouter>
-            <Switch>
-              <Route exact path="/" component={Signin} />
-              <Route path="/app" component={App} />
-              <Route path="/add-artwork" component={Form} />
-            </Switch>
-        </BrowserRouter>
+          <BrowserRouter>
+            <Suspense fallback="...">
+              <Switch>
+                <Route exact path="/" render={(params) => <Signin {...params}/>} />
+                <Route path="/app" component={App} />
+              </Switch>
+            </Suspense>
+          </BrowserRouter>
       </React.Fragment>
       </Provider>
     );

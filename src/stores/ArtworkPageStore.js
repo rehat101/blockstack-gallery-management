@@ -5,18 +5,15 @@ class ArtworkPageStore {
 
     @observable artwork = {};
 
-    @action setArtwork(data) {
-        this.artwork = data;
-    }
-
-    @action async loadArtwork(id) {
+    @action.bound async loadArtwork(id) {
 
         try {
 
             let response = await getFile(`artworks/artwork_${id}.json`, {decrypt: false});
             response = JSON.parse(response);
 
-            this.setArtwork(response);
+            this.artwork = response;
+
         }
 
         catch(err) { console.log(err); }
