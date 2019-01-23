@@ -16,7 +16,7 @@ const Img = styled.img`
   position: absolute;
   object-fit: contain;
   opacity: ${props => props.isLoaded ? '1' : '0'};
-  transition: opacity .50s ease-in;
+  transition: opacity .20s ease-in;
 `;
 
 class LazyImg extends Component {
@@ -27,7 +27,7 @@ class LazyImg extends Component {
     this.state = {
       isLoaded: false,
       src: null,
-      ratio: 0
+      ratio: null
     };
   }
 
@@ -46,10 +46,8 @@ class LazyImg extends Component {
     }, 10);
 
     this.img.onload = () => {
-      setTimeout(() => {
-        this.setState({ src });
-        this.setState({ isLoaded: true });
-      }, 400);
+      this.setState({ src });
+      this.setState({ isLoaded: true });
     };
   }
 
@@ -60,14 +58,16 @@ class LazyImg extends Component {
     }
 
     clearInterval(this.poll);
-    this.img.onload = null;
+    this.img.onload = () => {};
     delete this.img;
   }
 
   render() {
+    const {src, ratio, isLoaded} = this.state;
+
     return(
-      <Figure ratio={this.state.ratio}>
-        <Img isLoaded={this.state.isLoaded} src={this.state.src}/>
+      <Figure ratio={ratio}>
+        <Img isLoaded={isLoaded} src={src}/>
       </Figure>
     );
   }
