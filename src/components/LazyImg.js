@@ -29,36 +29,49 @@ class LazyImg extends Component {
       src: null,
       ratio: null
     };
+
+    this.handleLoad = this.handleLoad.bind(this);
+    this.handleError = this.handleError.bind(this);
+
   }
 
-
-  componentDidMount() {
+  loadImg() {
     this.img = new Image();
     this.img.src = this.props.src;
-    const src = this.img.src;
 
     this.poll = setInterval(() => {
       if (this.img.naturalWidth) {
           clearInterval(this.poll);
-          const ratio = (this.img.naturalHeight/this.img.naturalWidth) * 100;
-          this.setState({ ratio });
+          this.setState({ ratio: (this.img.naturalHeight/this.img.naturalWidth) * 100 });
       }
     }, 10);
 
-    this.img.onload = () => {
-      this.setState({ src });
-      this.setState({ isLoaded: true });
-    };
+    this.img.addEventListener('load', this.handleLoad);
+    this.img.addEventListener('error', this.handleError);
+  }
+
+  handleLoad() {
+    this.setState({ src: this.img.src });
+    this.setState({ isLoaded: true });
+  }
+
+  handleError(e) {
+    console.log(e);
+    this.setState({ isLoaded: false });
+  }
+
+  componentDidMount() {
+    this.loadImg();
   }
 
   componentWillUnmount() {
-
     if (!this.img) {
       return;
     }
 
     clearInterval(this.poll);
-    this.img.onload = () => {};
+    this.img.removeEventListener('load', this.handleLoad);
+    this.img.removeEventListener('error', this.handleError);
     delete this.img;
   }
 
@@ -74,4 +87,14 @@ class LazyImg extends Component {
 
 }
 
-export default LazyImg;
+const areEqual = (prevProps, nextProps) => {
+
+  if(prevProps.src === nextProps.src) {
+    return true;
+  } else {
+    return false;
+  }
+
+};
+
+export default React.memo(LazyImg, areEqual);
