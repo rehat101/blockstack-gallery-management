@@ -4,7 +4,7 @@ A tool to manage artworks in your gallery
 ## How to run
 `npm install`
 
-`npm start run` - runs webpack in development mode
+`npm run start` - runs webpack in development mode
 
 ## Tech
 - React
