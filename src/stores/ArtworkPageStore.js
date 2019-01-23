@@ -3,7 +3,9 @@ import { getFile } from 'blockstack';
 
 class ArtworkPageStore {
 
-    @observable artwork = {};
+    @observable artwork = {
+      img_url: ''
+    };
 
     @action.bound async loadArtwork(id) {
 
@@ -12,7 +14,7 @@ class ArtworkPageStore {
             let response = await getFile(`artworks/artwork_${id}.json`, {decrypt: false});
             response = JSON.parse(response);
 
-            this.artwork = response;
+            this.artwork = Object.assign({}, response);
 
         }
 

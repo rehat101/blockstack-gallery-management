@@ -40,10 +40,12 @@ class LazyImg extends Component {
     this.img.src = this.props.src;
 
     this.poll = setInterval(() => {
+
       if (this.img.naturalWidth) {
-          clearInterval(this.poll);
-          this.setState({ ratio: (this.img.naturalHeight/this.img.naturalWidth) * 100 });
+        clearInterval(this.poll);
+        this.setState({ ratio: (this.img.naturalHeight/this.img.naturalWidth) * 100 });
       }
+
     }, 10);
 
     this.img.addEventListener('load', this.handleLoad);
@@ -75,6 +77,15 @@ class LazyImg extends Component {
     delete this.img;
   }
 
+  componentDidUpdate(_, prevState) {
+    if (this.state.src !== prevState.src) {
+      this.loadImg();
+      console.log('loading img');
+    } else {
+      console.log('nothing');
+    }
+  }
+
   render() {
     const {src, ratio, isLoaded} = this.state;
 
@@ -87,12 +98,4 @@ class LazyImg extends Component {
 
 }
 
-const areEqual = (prevProps, nextProps) => {
-  if(prevProps.src == nextProps.src) {
-    return true;
-  } else {
-    return false;
-  }
-};
-
-export default React.memo(LazyImg, areEqual);
+export default LazyImg;

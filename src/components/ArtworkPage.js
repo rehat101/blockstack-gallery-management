@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import LazyImg from './LazyImg';
 import styled from 'styled-components';
-import {Button} from '../StyledComponents/button';
 import { inject, observer } from 'mobx-react';
-import { Container, Row, Col } from 'react-grid-system';
+import { Container } from 'react-grid-system';
+import Spinner from './Spinner';
+import ArtworkPageData from './ArtworkPageData';
 
 const Wrapper = styled.section`
-  margin-top: 20px;
+  margin-top: 40px;
 
   a {
     font-size: 12px;
@@ -21,52 +21,26 @@ const Wrapper = styled.section`
 
 `;
 
-const Title = styled.h1`
-  font-size: 22px;
-  font-weight: 600;
-  line-height: 28px;
-`;
-
-const Desc = styled.p`
-  font-size: 13px;
-`;
-
-const ContactSection = styled.section`
-  border-top: 1px solid lightgray;
-  padding-top: 30px;
-  margin-top: 30px;
-  margin-bottom: 20px;
-`;
-
-const Price = styled.h2`
-  font-size: 18px;
-  font-weight: 600;
-  margin-top: 0;
-  margin-bottom: 10px;
-`;
-
-const FootNote = styled.p`
-  font-size: 12px;
-  margin-bottom: 25px;
-  opacity: 0.6;
-  line-height: 1.4;
-`;
-
-const Right = styled.section`
-  height: 230px;
-`;
 
 class _ArtworkPage extends Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      isLoading: false
+    };
+
   }
 
   async componentDidMount() {
     const id = parseInt(this.props.match.params.id);
     const { ArtworkPageStore } = this.props;
 
+    this.setState({ isLoading: true });
     await ArtworkPageStore.loadArtwork(id);
+    this.setState({ isLoading: false });
+
   }
 
   render() {
@@ -74,29 +48,13 @@ class _ArtworkPage extends Component {
     const artwork = ArtworkPageStore.artwork;
 
     if(!artwork) {
-      return <div>Artwork not found</div>;
+      return( <div>Artwork not found</div> );
     }
 
     return (
       <Wrapper>
         <Container fluid>
-          <Row justify="center">
-            <Col md={4}>
-              <LazyImg src={artwork.img_url} key={artwork.img_url || '(none)'}/>
-            </Col>
-            <Col md={4}>
-            <Right>
-              <Title>{artwork.title}</Title>
-              <Desc>{artwork.description}</Desc>
-            </Right>
-              <ContactSection>
-                <Price>$2,450</Price>
-                <FootNote>Ships from Aventura, FL, US<br/>Shipping: $35 continental US, $100 rest of world</FootNote>
-                <Button width="100%" href="#">Bid Now</Button>
-              </ContactSection>
-              <a href="#">Contact Gallery</a>
-            </Col>
-          </Row>
+          {this.state.isLoading ? <Spinner/> : <ArtworkPageData artwork={artwork}/>}
         </Container>
      </Wrapper>
     );
