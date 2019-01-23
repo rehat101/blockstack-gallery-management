@@ -88,13 +88,11 @@ class LazyImg extends Component {
 }
 
 const areEqual = (prevProps, nextProps) => {
-
-  if(prevProps.src === nextProps.src) {
+  if(prevProps.src == nextProps.src) {
     return true;
   } else {
     return false;
   }
-
 };
 
 export default React.memo(LazyImg, areEqual);
