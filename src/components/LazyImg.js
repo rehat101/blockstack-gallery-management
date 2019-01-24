@@ -16,7 +16,7 @@ const Img = styled.img`
   position: absolute;
   object-fit: contain;
   opacity: ${props => props.isLoaded ? '1' : '0'};
-  transition: opacity .10s ease-in;
+  transition: opacity .20s ease-in;
 `;
 
 const idle = {
@@ -41,11 +41,11 @@ class LazyImg extends Component {
   }
 
   loadImg() {
-    this.rAfid = null;
+    this._rAfid = null;
     this.img = new Image();
     this.img.src = this.props.src;
 
-    this.rAfid = idle.request(this.getImgRatio);
+    this._rAfid = idle.request(this.getImgRatio);
     this.img.addEventListener('load', this.handleLoad);
     this.img.addEventListener('error', this.handleError);
   }
@@ -53,12 +53,13 @@ class LazyImg extends Component {
   getImgRatio() {
 
     if(this.img.naturalWidth) {
-      idle.cancel(this.idleHandle);
+      idle.cancel(this._rAfid);
+      console.log('get width...');
       const ratio = (this.img.naturalHeight/this.img.naturalWidth) * 100;
       this.setState({ ratio });
       console.log(ratio);
     } else {
-      idle.request(this.calculateRatio);
+      this._rAfid = idle.request(this.getImgRatio);
     }
 
   }
@@ -82,7 +83,7 @@ class LazyImg extends Component {
       return;
     }
 
-    idle.cancel(this.rAfid);
+    idle.cancel(this._rAfid);
     this.img.removeEventListener('load', this.handleLoad);
     this.img.removeEventListener('error', this.handleError);
     delete this.img;

@@ -28,8 +28,7 @@ class _Dashboard extends Component {
   }
 
   render() {
-    const { AppStore } = this.props;
-    const { FormStore } = this.props;
+    const { AppStore, FormStore } = this.props;
 
     return (
       <main>
