@@ -19,6 +19,11 @@ const Img = styled.img`
   transition: opacity .20s ease-in;
 `;
 
+const idle = {
+  request: ((fn) => window.requestIdleCallback(fn, {timeout: 50})) || ((fn) => setTimeout(fn, 10)),
+  cancel: ((id) => window.cancelIdleCallback(id))
+};
+
 class LazyImg extends Component {
 
   constructor(props) {
@@ -36,17 +41,23 @@ class LazyImg extends Component {
   }
 
   loadImg() {
+    this.idleHandle = null;
     this.img = new Image();
     this.img.src = this.props.src;
 
-    this.poll = setInterval(() => {
+    // this.poll = setInterval(() => {
 
-      if (this.img.naturalWidth) {
-        clearInterval(this.poll);
-        this.setState({ ratio: (this.img.naturalHeight/this.img.naturalWidth) * 100 });
-      }
+    //   if (this.img.naturalWidth) {
+    //     clearInterval(this.poll);
+    //     this.setState({ ratio: (this.img.naturalHeight/this.img.naturalWidth) * 100 });
+    //   }
 
-    }, 10);
+    // }, 10);
+
+    this.idleHandle = idle.request(() => {
+      this.idleHandle = null;
+      this.setState({ ratio: (this.img.naturalHeight/this.img.naturalWidth) * 100 });
+    });
 
     this.img.addEventListener('load', this.handleLoad);
     this.img.addEventListener('error', this.handleError);
@@ -71,7 +82,7 @@ class LazyImg extends Component {
       return;
     }
 
-    clearInterval(this.poll);
+    idle.cancel(this.handleIdle);
     this.img.removeEventListener('load', this.handleLoad);
     this.img.removeEventListener('error', this.handleError);
     delete this.img;
@@ -80,9 +91,6 @@ class LazyImg extends Component {
   componentDidUpdate(_, prevState) {
     if (this.state.src !== prevState.src) {
       this.loadImg();
-      console.log('loading img');
-    } else {
-      console.log('nothing');
     }
   }
 
