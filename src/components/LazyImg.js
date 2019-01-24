@@ -20,8 +20,8 @@ const Img = styled.img`
 `;
 
 const idle = {
-  request: ((fn) => window.requestIdleCallback(fn, {timeout: 50})) || ((fn) => setTimeout(fn, 10)),
-  cancel: ((id) => window.cancelIdleCallback(id))
+  request: ((fn) => window.requestAnimationFrame(fn)),
+  cancel: ((id) => window.cancelAnimationFrame(id))
 };
 
 class LazyImg extends Component {
@@ -37,30 +37,30 @@ class LazyImg extends Component {
 
     this.handleLoad = this.handleLoad.bind(this);
     this.handleError = this.handleError.bind(this);
-
+    this.getImgRatio = this.getImgRatio.bind(this);
   }
 
   loadImg() {
-    this.idleHandle = null;
+    this.rAfid = null;
     this.img = new Image();
     this.img.src = this.props.src;
 
-    // this.poll = setInterval(() => {
-
-    //   if (this.img.naturalWidth) {
-    //     clearInterval(this.poll);
-    //     this.setState({ ratio: (this.img.naturalHeight/this.img.naturalWidth) * 100 });
-    //   }
-
-    // }, 10);
-
-    this.idleHandle = idle.request(() => {
-      this.idleHandle = null;
-      this.setState({ ratio: (this.img.naturalHeight/this.img.naturalWidth) * 100 });
-    });
-
+    this.rAfid = idle.request(this.getImgRatio);
     this.img.addEventListener('load', this.handleLoad);
     this.img.addEventListener('error', this.handleError);
+  }
+
+  getImgRatio() {
+
+    if(this.img.naturalWidth) {
+      idle.cancel(this.idleHandle);
+      const ratio = (this.img.naturalHeight/this.img.naturalWidth) * 100;
+      this.setState({ ratio });
+      console.log(ratio);
+    } else {
+      idle.request(this.calculateRatio);
+    }
+
   }
 
   handleLoad() {
@@ -77,23 +77,25 @@ class LazyImg extends Component {
     this.loadImg();
   }
 
-  componentWillUnmount() {
+  cleanup() {
     if (!this.img) {
       return;
     }
 
-    idle.cancel(this.handleIdle);
+    idle.cancel(this.rAfid);
     this.img.removeEventListener('load', this.handleLoad);
     this.img.removeEventListener('error', this.handleError);
     delete this.img;
+  }
+
+  componentWillUnmount() {
+    this.cleanup();
   }
 
   componentDidUpdate(_, prevState) {
     if (this.state.src !== prevState.src) {
       this.loadImg();
       console.log('update', prevState);
-    } else {
-      console.log('dont update!');
     }
   }
 
@@ -102,7 +104,6 @@ class LazyImg extends Component {
       return { src: props.src };
     }
 
-    console.log(props,state);
     return null;
   }
 
