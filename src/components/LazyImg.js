@@ -91,7 +91,19 @@ class LazyImg extends Component {
   componentDidUpdate(_, prevState) {
     if (this.state.src !== prevState.src) {
       this.loadImg();
+      console.log('update', prevState);
+    } else {
+      console.log('dont update!');
     }
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.src !== state.src) {
+      return { src: props.src };
+    }
+
+    console.log(props,state);
+    return null;
   }
 
   render() {
