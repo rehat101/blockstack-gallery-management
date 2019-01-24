@@ -16,7 +16,7 @@ const Img = styled.img`
   position: absolute;
   object-fit: contain;
   opacity: ${props => props.isLoaded ? '1' : '0'};
-  transition: opacity .20s ease-in;
+  transition: opacity .10s ease-in;
 `;
 
 const idle = {
