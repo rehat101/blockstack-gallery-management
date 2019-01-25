@@ -1,5 +1,5 @@
 # blockstack-gallery-management
-A tool to manage artworks in your gallery
+A tool to manage artworks in your gallery. Built on top of blockstack.org
 
 ## How to run
 `npm install`
