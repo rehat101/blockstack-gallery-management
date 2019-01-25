@@ -6,9 +6,9 @@ import { isUserSignedIn } from 'blockstack';
 const Dashboard = React.lazy(() => import('./Dashboard'));
 const ArtworkPage = React.lazy(() => import('./ArtworkPage'));
 
-const ProtectedRoute = ({isAllowed, ...rest}) => {
+const ProtectedRoute = (props) => {
   return(
-    isAllowed ? <Route {...rest} /> : <p>You are not authorized to view this page. Please login!</p>
+    isUserSignedIn() ? <Route {...props} /> : <p>You are not authorized to view this page. Please login!</p>
   );
 };
 
@@ -23,8 +23,9 @@ class App extends Component {
       <Suspense fallback={<Spinner/>}>
          <Switch>
             <Route exact path='/app'><Redirect to="/app/dashboard"/></Route>
-            <ProtectedRoute isAllowed={isUserSignedIn()} exact path='/app/dashboard' render={() => <Dashboard/>}/>
-            <ProtectedRoute isAllowed={isUserSignedIn()} path='/app/artwork/:id' render={(params) => <ArtworkPage {...params} />}/>
+            <ProtectedRoute exact path='/app/dashboard' render={() => <Dashboard/>}/>
+            <ProtectedRoute path='/app/artwork/:id' render={(params) => <ArtworkPage {...params} />}/>
+            <Route render={() => <p>404 Not Found</p>} />
          </Switch>
       </Suspense>
     );

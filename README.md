@@ -26,6 +26,7 @@ A tool to manage artworks in your gallery
 - [x] split blockstack, react, mobx, bluebird into chunks using webpack
 - [x] lazy load images
 - [x] add protected routes
+- [x] add 404 if routes aren't found
 - [ ] inspect why network calls to blockstack are slow
 - [ ] set file headers
 - [ ] create index.json for first time users

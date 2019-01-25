@@ -6,7 +6,6 @@ import GlobalStyle from '../StyledComponents/global';
 
 const Signin = React.lazy(() => import('./Signin'));
 
-
 class Client extends Component {
 
   constructor(props) {
@@ -23,6 +22,7 @@ class Client extends Component {
               <Switch>
                 <Route exact path="/" render={(params) => <Signin {...params}/>} />
                 <Route path="/app" component={App} />
+                <Route render={() => <p>404 Not Found</p>} />
               </Switch>
             </Suspense>
           </BrowserRouter>
