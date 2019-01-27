@@ -1,6 +1,6 @@
 import { action, observable } from 'mobx';
 import { putFile, getFile } from 'blockstack';
-import { indexOf } from 'lodash';
+import indexOf from 'lodash/indexOf';
 
 const IMG_PATH = 'artworks/images/artwork_';
 const ART_DATA_PATH = 'artworks/artwork_';

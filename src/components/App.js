@@ -1,10 +1,9 @@
 import React, { Component, Suspense } from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
-import Spinner from './Spinner';
 import { isUserSignedIn } from 'blockstack';
 
-const Dashboard = React.lazy(() => import('./Dashboard'));
-const ArtworkPage = React.lazy(() => import('./ArtworkPage'));
+const Dashboard = React.lazy(() => import(/* webpackChunkName: "Dashboard"*/ './Dashboard'));
+const ArtworkPage = React.lazy(() => import(/* webpackChunkName: "ArtworkPage"*/ './ArtworkPage'));
 
 const ProtectedRoute = (props) => {
   return(
@@ -20,7 +19,7 @@ class App extends Component {
 
   render() {
     return (
-      <Suspense fallback={<Spinner/>}>
+      <Suspense fallback="...">
          <Switch>
             <Route exact path='/app'><Redirect to="/app/dashboard"/></Route>
             <ProtectedRoute exact path='/app/dashboard' render={() => <Dashboard/>}/>

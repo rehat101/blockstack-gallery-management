@@ -1,10 +1,5 @@
 const path = require('path');
-// const webpack = require('webpack');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-
-
-// copy manifest.json to the path: 'public/build'
-// this will allow for the authRequest to see the file at www.example.com/manifest.json
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ManifestAssetPlugin = new CopyWebpackPlugin([ { from: 'src/assets/manifest.json', to: 'manifest.json' } ]);
 const IconAssetPlugin = new CopyWebpackPlugin([ { from: 'src/images/icon-192x192.png', to: 'icon-192x192.png' } ]);
@@ -22,37 +17,20 @@ module.exports = {
   output: {
     path: path.resolve('public/build'),
     filename: 'index_bundle.js',
-    chunkFilename: '[name].[contenthash].js'
+    chunkFilename: '[name].[chunkhash].chunk.js'
   },
   optimization: {
-    runtimeChunk: 'single',
+    sideEffects: true,
+    usedExports: true,
     splitChunks: {
       chunks: 'all',
-      maxInitialRequests: Infinity,
-      minSize: 0,
+      name: true,
+      maxInitialRequests: 5,
+      maxAsyncRequests: 7,
       cacheGroups: {
-        react: {
-          test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
-          name: 'react',
-          reuseExistingChunk: true,
-          chunks: 'all',
-        },
-        lodash: {
-          test: /[\\/]lodash[\\/]/,
-          name: 'lodash',
-          chunks: 'all',
-        },
-        blockstack: {
-          test: /[\\/]blockstack[\\/]/,
-          name: 'blockstack',
-          reuseExistingChunk: true,
-          chunks: 'all',
-        },
-        mobx: {
-          test: /[\\/]mobx[\\/]/,
-          name: 'mobx',
-          reuseExistingChunk: true,
-          chunks: 'all',
+        commons: {
+          test: /[\\/](react|react-dom|blockstack|lodash?.?\w+)[\\/]/,
+          name: 'commons'
         }
       }
     }

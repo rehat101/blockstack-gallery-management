@@ -1,10 +1,10 @@
 import React, { Component, Suspense } from 'react';
 import { Provider } from 'mobx-react';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
-import App from './App';
 import GlobalStyle from '../StyledComponents/global';
 
-const Signin = React.lazy(() => import('./Signin'));
+const Signin = React.lazy(() => import(/* webpackChunkName: "Signin"*/ './Signin'));
+const App = React.lazy(() => import(/* webpackChunkName: "App"*/  './App'));
 
 class Client extends Component {
 
@@ -16,12 +16,12 @@ class Client extends Component {
     return (
       <Provider {...this.props.stores}>
       <React.Fragment>
-        <GlobalStyle/>
+          <GlobalStyle/>
           <BrowserRouter>
             <Suspense fallback="...">
               <Switch>
                 <Route exact path="/" render={(params) => <Signin {...params}/>} />
-                <Route path="/app" component={App} />
+                <Route path="/app" render={(params) => <App {...params}/>} />
                 <Route render={() => <p>404 Not Found</p>} />
               </Switch>
             </Suspense>
