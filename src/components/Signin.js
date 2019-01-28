@@ -7,25 +7,17 @@ import {
 import styled from 'styled-components';
 import { Button } from '../StyledComponents/button';
 
-const Pitch = styled.h1`
-  font-size: 35px;
-  font-weight: 600;
-  margin: 0;
-`;
-
-const Desc = styled.h2`
-  font-size: 18px;
-  font-weight: normal;
-  line-height: 1.5;
-  margin-top: 0;
-  margin-bottom: 24px;
-`;
-
 const SignInContainer = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
+  background-color: #151515;
+  color: white;
+`;
+
+const Logo = styled.section`
+  margin-bottom: 14px;
 `;
 
 const SignInWrapper = styled.section`
@@ -59,9 +51,7 @@ class Signin extends Component {
     return (
       <SignInContainer>
         <SignInWrapper>
-          <Pitch>Manage and sell artworks in your gallery</Pitch>
-          <Desc>Recieve inquiries, review collector profiles, and
-          process payments—all in one place with easy-to-use content management and messaging system.</Desc>
+          <Logo><img src="logo.png" width="105" height="99"/></Logo>
           <Button onClick={this.handleSignIn}>Sign In with blockstack</Button>
         </SignInWrapper>
       </SignInContainer>

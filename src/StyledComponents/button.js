@@ -5,8 +5,10 @@ const transition = 'transition: all .1s ease-in;';
 export const Button = styled.button`
 	background-color: black;
 	color: white;
-	font-size: 14px;
-	padding: 10px 20px;
+	font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+	padding: 14px 15px 13px;
 	border-radius: 4px;
 	-webkit-appearance: none;
 	border: 0;

@@ -1,41 +1,17 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { inject, observer } from 'mobx-react';
-import LazyImg from './LazyImg';
-import Spinner from './Spinner';
 import { Container } from 'react-grid-system';
+import Spinner from './Spinner';
+import GridData from './GridData';
 
-const GridWrapper = styled.div`
+const GridWrapper = styled.section`
   columns: 4 200px;
 `;
 
-const GridItem = styled.div`
-  width: 100%;
-  margin-bottom: 20px;
-  -webkit-column-break-inside:avoid;
-  -moz-column-break-inside:avoid;
-  page-break-inside: avoid;
-`;
-
-const GridMeta = styled.div`
-  margin-top: 2px;
-
-  p {
-    margin: 0 0 -5px 0;
-  }
-
-  small {
-    color: gray;
-  }
-`;
-
-const GridItemAnchor = styled.a`
-  color: inherit;
-
-  &:hover {
-    color: inherit;
-    text-decoration: none;
-  }
+const EmptyMsg = styled.p`
+  opacity: 0.3;
+  font-size: 60px;
 `;
 
 class _Grid extends Component {
@@ -60,26 +36,19 @@ class _Grid extends Component {
     const { GridStore } = this.props;
     const artworks = GridStore.data;
 
+    if(this.state.isLoading) {
+      return(<Spinner/>);
+    }
+
+    if(artworks.length === 0) {
+      return(<Container fluid><EmptyMsg>You have no artworks.</EmptyMsg></Container>);
+    }
+
     return (
       <GridWrapper>
-      {this.state.isLoading ? <Spinner/> : null}
-      <Container fluid>
-          {
-           artworks.map((v, k) => {
-             return(
-              <GridItemAnchor key={k} href={'app/artwork/' + v.id} data-id={v.id}>
-                <GridItem>
-                    <LazyImg src={v.img_url}/>
-                    <GridMeta>
-                      <p>{v.title}</p>
-                      <small>{v.created_at}</small>
-                    </GridMeta>
-                </GridItem>
-              </GridItemAnchor>
-              );
-            })
-          }
-      </Container>
+        <Container fluid>
+          <GridData artworks={artworks}/>
+        </Container>
       </GridWrapper>
     );
   }

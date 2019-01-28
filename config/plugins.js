@@ -9,7 +9,8 @@ const server = [
     inject: 'body'
   }),
   new CopyWebpackPlugin([ { from: 'src/assets/manifest.json', to: 'manifest.json' } ]),
-  new CopyWebpackPlugin([ { from: 'src/assets/images/icon.png', to: 'icon.png' } ])
+  new CopyWebpackPlugin([ { from: 'src/assets/images/icon.png', to: 'icon.png' } ]),
+  new CopyWebpackPlugin([ { from: 'src/assets/logo.png', to: 'logo.png' } ])
 ];
 
 module.exports = { server };

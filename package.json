@@ -5,7 +5,7 @@
   "description": "artwork management tool for art galleries",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=development node server.js",
+    "dev": "NODE_ENV=development PORT=8080 node server.js",
     "prod": "NODE_ENV=production node server.js",
     "build": "webpack --config config/webpack.prod.config.js --progress"
   },
