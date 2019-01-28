@@ -35,6 +35,7 @@ if(process.env.NODE_ENV === 'production') {
   }));
 
   app.get('*', (req, res) => {
+
     const index = path.join(compiler.outputPath,'index.html');
 
     compiler.outputFileSystem.readFile(index, (err, result, next) => {
@@ -55,7 +56,7 @@ if(process.env.NODE_ENV === 'production') {
 app.listen(process.env.PORT || 8080, () => {
     console.log(
       `[${new Date().toISOString()}]`,
-      `enviornment ${process.env.NODE_ENV}`,
+      `enviornment: ${process.env.NODE_ENV}`,
       `🌎 http server started on port ${process.env.PORT || 8080}`
     );
 });

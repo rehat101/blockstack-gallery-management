@@ -47,13 +47,13 @@ class FormStore {
 
       await putFile(`${ART_DATA_PATH}${payload.id}.json`, artwork, { encrypt: false, contentType: 'application/json' });
 
-      return await this.upsertIndex(payload.id);
+      return await this.upsertToIndex(payload.id);
     }
 
     catch(err) { console.log(err); }
   }
 
-  async upsertIndex(id) {
+  async upsertToIndex(id) {
     const artwork = `artwork_${id}`;
 
     try {

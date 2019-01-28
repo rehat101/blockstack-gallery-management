@@ -2,6 +2,7 @@ import React, { Component, Suspense } from 'react';
 import { Provider } from 'mobx-react';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import GlobalStyle from '../StyledComponents/global';
+import Spinner from './Spinner';
 
 const Signin = React.lazy(() => import(/* webpackChunkName: "Signin"*/ './Signin'));
 const App = React.lazy(() => import(/* webpackChunkName: "App"*/  './App'));
@@ -18,7 +19,7 @@ class Client extends Component {
       <React.Fragment>
           <GlobalStyle/>
           <BrowserRouter>
-            <Suspense fallback="...">
+            <Suspense fallback={<Spinner/>}>
               <Switch>
                 <Route exact path="/" render={(params) => <Signin {...params}/>} />
                 <Route path="/app" render={(params) => <App {...params}/>} />
