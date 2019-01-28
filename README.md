@@ -1,4 +1,5 @@
 # blockstack-gallery-management
+
 A tool to manage artworks in your gallery. Built on top of blockstack.org
 
 ## How to run
@@ -25,7 +26,7 @@ A tool to manage artworks in your gallery. Built on top of blockstack.org
 - [ ] Delete artwork
 - [ ] Share artwork
 
-## Tech Optimizations
+## Optimizations
 - [x] lazy load components using dynamic imports 🔥
 - [x] split blockstack, react, mobx, bluebird into chunks using webpack
 - [x] lazy load images
