@@ -4,7 +4,9 @@ A tool to manage artworks in your gallery. Built on top of blockstack.org
 ## How to run
 `npm install`
 
-`npm run start` - runs webpack in development mode
+`npm run dev` - runs server in development mode
+`npm run prod` - runs server in production mode with optimizations
+`npm run build`
 
 ## Tech
 - React
@@ -27,6 +29,5 @@ A tool to manage artworks in your gallery. Built on top of blockstack.org
 - [x] lazy load images
 - [x] add protected routes
 - [x] add 404 if routes aren't found
-- [ ] inspect why network calls to blockstack are slow
 - [ ] set file headers
 - [ ] create index.json for first time users

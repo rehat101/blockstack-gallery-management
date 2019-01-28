@@ -54,10 +54,8 @@ class LazyImg extends Component {
 
     if(this.img.naturalWidth) {
       idle.cancel(this._rAfid);
-      console.log('get width...');
       const ratio = (this.img.naturalHeight/this.img.naturalWidth) * 100;
       this.setState({ ratio });
-      console.log(ratio);
     } else {
       this._rAfid = idle.request(this.getImgRatio);
     }

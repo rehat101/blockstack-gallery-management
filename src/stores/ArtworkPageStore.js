@@ -3,9 +3,7 @@ import { getFile } from 'blockstack';
 
 class ArtworkPageStore {
 
-    @observable artwork = {
-      img_url: ''
-    };
+    @observable artwork = {};
 
     @action.bound async loadArtwork(id) {
 

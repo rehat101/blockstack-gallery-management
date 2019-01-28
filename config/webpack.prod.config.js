@@ -1,8 +1,12 @@
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const baseConfig = require('./webpack.base');
 
-module.exports = {
+const config = {
+  ...baseConfig,
+  mode: 'production',
   optimization: {
+    ...baseConfig.optimization,
     minimizer: [
       new TerserPlugin({
         parallel: true,
@@ -11,5 +15,11 @@ module.exports = {
         }
       })
     ]
-  }
+  },
+  plugins: [
+    new OptimizeCssAssetsPlugin(),
+    ...baseConfig.plugins
+  ]
 };
+
+module.exports = config;

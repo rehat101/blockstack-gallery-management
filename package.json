@@ -5,8 +5,9 @@
   "description": "artwork management tool for art galleries",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
-    "build": "webpack --mode=production --config webpack.prod.config.js --progress"
+    "dev": "NODE_ENV=development node server.js",
+    "prod": "NODE_ENV=production node server.js",
+    "build": "webpack --config config/webpack.prod.config.js --progress"
   },
   "repository": {
     "type": "git",
