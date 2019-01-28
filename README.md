@@ -2,10 +2,12 @@
 A tool to manage artworks in your gallery. Built on top of blockstack.org
 
 ## How to run
-`npm install`
+`npm install` - install all dependecies
 
 `npm run dev` - runs server in development mode
+
 `npm run prod` - runs server in production mode with optimizations
+
 `npm run build`
 
 ## Tech
