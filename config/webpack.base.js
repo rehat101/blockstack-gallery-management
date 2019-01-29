@@ -7,7 +7,7 @@ const config = {
   mode: 'development',
   target: 'web',
   output: {
-    path: path.resolve('public/build'),
+    path: path.resolve('public'),
     filename: 'index_bundle.js',
     chunkFilename: '[name].[chunkhash].chunk.js'
   },
