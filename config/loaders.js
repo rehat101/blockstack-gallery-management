@@ -1,3 +1,5 @@
+const path = require('path');
+
 const babelLoader = {
   test: /\.js$/,
   loader: require.resolve('babel-loader'),
@@ -14,12 +16,24 @@ const fileLoader = {
   loader: require.resolve('file-loader')
 };
 
+const manifestLoader = {
+  test: /manifest.json$/,
+  loader: path.resolve('./manifest-loader/index'),
+  options: {
+    production: {
+      start_url: 'festive-bhabha-7e881b.netlify.com',
+      icon_src: 'https://festive-bhabha-7e881b.netlify.com/icon.png'
+    }
+  }
+};
+
 const server = [
   {
     oneOf: [
       babelLoader,
       urlLoader,
-      fileLoader
+      fileLoader,
+      manifestLoader
     ],
   }
 ];

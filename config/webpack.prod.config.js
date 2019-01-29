@@ -4,6 +4,10 @@ const baseConfig = require('./webpack.base');
 
 const config = {
   ...baseConfig,
+  entry: {
+    ...baseConfig.entry,
+    manifest: './src/assets/manifest.json'
+  },
   mode: 'production',
   optimization: {
     ...baseConfig.optimization,
@@ -19,7 +23,8 @@ const config = {
   plugins: [
     new OptimizeCssAssetsPlugin(),
     ...baseConfig.plugins
-  ]
+  ],
+  stats: 'errors-only'
 };
 
 module.exports = config;

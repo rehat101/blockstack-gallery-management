@@ -3,12 +3,14 @@ const plugins = require('./plugins');
 const loaders = require('./loaders');
 
 const config = {
-  entry: './src/index.js',
+  entry: {
+    main: './src/index.js'
+  },
   mode: 'development',
   target: 'web',
   output: {
     path: path.resolve('public'),
-    filename: 'index_bundle.js',
+    filename: '[name]_bundle.js',
     chunkFilename: '[name].[chunkhash].chunk.js'
   },
   optimization: {
