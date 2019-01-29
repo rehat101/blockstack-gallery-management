@@ -18,6 +18,8 @@ const SignInContainer = styled.section`
 
 const Logo = styled.section`
   margin-bottom: 14px;
+  width: 100px;
+  height: 100px;
 `;
 
 const SignInWrapper = styled.section`
@@ -51,7 +53,7 @@ class Signin extends Component {
     return (
       <SignInContainer>
         <SignInWrapper>
-          <Logo><img src="logo.png" width="105" height="99"/></Logo>
+          <Logo><img src="logo.png"/></Logo>
           <Button onClick={this.handleSignIn}>Sign In with blockstack</Button>
         </SignInWrapper>
       </SignInContainer>

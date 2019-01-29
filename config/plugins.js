@@ -10,7 +10,8 @@ const server = [
   }),
   new CopyWebpackPlugin([ { from: 'src/assets/manifest.json', to: 'manifest.json' } ]),
   new CopyWebpackPlugin([ { from: 'src/assets/images/icon.png', to: 'icon.png' } ]),
-  new CopyWebpackPlugin([ { from: 'src/assets/logo.png', to: 'logo.png' } ])
+  new CopyWebpackPlugin([ { from: 'src/assets/logo.png', to: 'logo.png' } ]),
+  new CopyWebpackPlugin([ { from: 'netlify.toml', to: 'netlify.toml' } ])
 ];
 
 module.exports = { server };
