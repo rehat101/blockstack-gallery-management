@@ -16,9 +16,10 @@ A tool to manage artworks in your gallery. Built on top of blockstack.org
 
 I have built a custom manifest loader via webpack which takes url options and creates a production-ready manifest file for you. 
 
-Please note: Use this loader only on production config
+_Please note: Use this loader only on your production config_
 
-`javascript const manifestLoader = {
+```javascript 
+const manifestLoader = {
   test: /manifest.json$/,
   loader: path.resolve('./manifest-loader/index'),
   options: {
@@ -27,7 +28,8 @@ Please note: Use this loader only on production config
       icon_src: 'https://produciton-url.com/icon.png'
     }
   }
-};`
+};
+```
 
 ## Tech
 - React
