@@ -12,7 +12,7 @@ class ArtworkPageStore {
             let response = await getFile(`artworks/artwork_${id}.json`, {decrypt: false});
             response = JSON.parse(response);
 
-            this.artwork = Object.assign({}, response);
+            this.artwork = response;
 
         }
 
