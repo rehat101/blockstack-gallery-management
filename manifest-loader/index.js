@@ -4,8 +4,9 @@ module.exports = function(source) {
 
   const options = getOptions(this);
 
-  if(!options.production) {
-    return this.emitFile('manifest.json', source);
+  if(!options || !options.production) {
+    this.emitFile('manifest.json', source);
+    return source;
   }
 
   const merged = Object.assign({}, JSON.parse(source));
