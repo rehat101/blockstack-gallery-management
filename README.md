@@ -14,9 +14,9 @@ A tool to manage artworks in your gallery. Built on top of blockstack.org
 
 ## Custom manifest loader
 
-I have built a custom manifest loader via webpack which takes url options and creates a production-ready manifest file for you. 
+I have built a custom webpack loader for the manifest file which takes a url options and creates a production-ready manifest file for you. 
 
-_Please note: Use this loader only on your production config_
+_Please note: Use this loader only in your production config_
 
 ```javascript 
 const manifestLoader = {
