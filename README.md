@@ -3,7 +3,7 @@
 A tool to manage artworks in your gallery. Built on top of blockstack.org
 
 ## Demo
-https://festive-bhabha-7e881b.netlify.com/app/dashboard
+https://festive-bhabha-7e881b.netlify.com
 
 ## How to run
 `npm install` - install all dependecies
